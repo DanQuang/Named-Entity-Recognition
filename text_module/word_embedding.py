@@ -5,6 +5,7 @@ from data_utils.utils import padding_sequence
 
 class WordEmbedding(nn.Module):
     def __init__(self, config):
+        super(WordEmbedding, self).__init__()
         self.vocab = Vocab(config)
         self.embedding_dim = config["text_embedding"]["embedding_dim"]
         self.max_length = config["text_embedding"]["max_length"]

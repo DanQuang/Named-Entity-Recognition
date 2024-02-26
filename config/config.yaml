@@ -1,4 +1,4 @@
-dataset_path: /content/drive/MyDrive/DS201_personal/Data/NER_Dataset.csv
+dataset_path: /content/drive/MyDrive/DS201_personal/Data/NER_Dataset/NER_Dataset.csv
 
 model:
   model_name: RNN # RNN, LSTM, GRU
