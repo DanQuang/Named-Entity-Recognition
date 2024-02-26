@@ -16,7 +16,7 @@ class MyDataset(Dataset):
 
         for i in range(len(data)):
             self.sentence.append(self.vocab.convert_tokens_to_ids(data.iloc[i]["Word"]))
-            self.tag.append(self.vocab.converts_tags_to_ids(data.iloc[i]["Tag"]))
+            self.tag.append(self.vocab.convert_tags_to_ids(data.iloc[i]["Tag"]))
 
     def __len__(self):
         return len(self.sentence)
