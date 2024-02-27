@@ -23,7 +23,8 @@ def padding_tags(list_tags, max_length, padding_value):
         if len(tags) < max_length:
             padding_length = max_length - len(tags)
             padding_array = tags + [padding_value]*padding_length
-            out.append(padding_array)
+            out.append(torch.tensor(padding_array, dtype= torch.int))
         else:
-             out.append(tags[:max_length])
-    return torch.tensor(out, dtype= torch.int16)
+             out.append(torch.tensor(tags[:max_length], dtype= torch.int))
+    out = torch.stack(out, dim= 0)
+    return out
