@@ -12,11 +12,18 @@ class MyDataset(Dataset):
         self.tag = []
         self.vocab = vocab
 
-        data = pd.read_csv(dataset_path)
+        data = pd.read_csv(dataset_path, encoding= 'latin1')
+        data = data.fillna('ffill')
 
-        for i in range(len(data)):
-            self.sentence.append(self.vocab.convert_tokens_to_ids(data.iloc[i]["Word"]))
-            self.tag.append(self.vocab.convert_tags_to_ids(data.iloc[i]["Tag"]))
+        agg_func = lambda s: [(w, p, t) for w, p, t in zip(s["Word"].values.tolist(),
+                                                           s["POS"].values.tolist(),
+                                                           s["Tag"].values.tolist())]
+
+        grouped = data.groupby("Sentence #").apply(agg_func)
+        sentences = [s for s in grouped]
+
+        self.sentence = [self.vocab.convert_tokens_to_ids(s) for s in sentences]
+        self.tag = [self.vocab.convert_tags_to_ids(s) for s in sentences]
 
     def __len__(self):
         return len(self.sentence)

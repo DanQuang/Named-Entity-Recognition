@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np
+from typing import List
 
 class Vocab:
     def __init__(self, config):
@@ -15,21 +15,14 @@ class Vocab:
         self.build_vocab()
 
     def build_words_and_tags(self):
-        dataset = pd.read_csv(self.dataset_path)
+        dataset = pd.read_csv(self.dataset_path, encoding= 'latin1')
+        dataset = dataset.fillna(method= 'ffill')
         
-        list_words = set()
-        list_tags = set()
+        list_words = list(set(dataset["Word"].values))
+        list_words.append('<pad>')
 
-        for words in dataset["Word"]:
-            for word in words:
-                list_words.add(word)
-
-        for tags in dataset["Tag"]:
-            for tag in tags:
-                list_tags.add(tag)
-
-        list_words = list(list_words)
-        list_tags = list(list_tags)
+        # lis tags
+        list_tags = list(set(dataset["Tag"].values))
 
         return list_words, list_tags
     
@@ -42,16 +35,16 @@ class Vocab:
         self.tag_to_idx = {tag: idx + 1 for idx, tag in enumerate(list_tags)}
         self.idx_to_tag = {idx: tag for tag, idx in self.tag_to_idx.items()}
 
-    def convert_tokens_to_ids(self, tokens):
+    def convert_tokens_to_ids(self, tokens: List):
         return [self.word_to_idx.get(token) for token in tokens]
     
-    def convert_ids_to_tokens(self, ids):
+    def convert_ids_to_tokens(self, ids: List):
         return [self.idx_to_word[idx] for idx in ids]
     
-    def convert_tags_to_ids(self, tags):
+    def convert_tags_to_ids(self, tags: List):
         return [self.tag_to_idx.get(tag) for tag in tags]
     
-    def convert_ids_to_tags(self, ids):
+    def convert_ids_to_tags(self, ids: List):
         return [self.idx_to_tag[idx] for idx in ids]
     
     def vocab_size(self):

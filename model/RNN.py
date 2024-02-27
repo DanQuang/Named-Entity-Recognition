@@ -28,6 +28,6 @@ class RNN(nn.Module):
         rnn_output, _ = self.rnn(embbed)
         out = rnn_output[-1]
         logits = self.fc(out)
-        tags_out = padding_tags(tags, self.max_length, self.vocab.tag_to_idx['O'])
-        loss = self.criterion(logits, tags_out)
+        tags_padding = padding_tags(tags, self.max_length, self.vocab.tag_to_idx['O'])
+        loss = self.criterion(logits, tags_padding)
         return logits, loss
