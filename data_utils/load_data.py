@@ -20,10 +20,13 @@ class MyDataset(Dataset):
                                                            s["Tag"].values.tolist())]
 
         grouped = data.groupby("Sentence #").apply(agg_func)
-        sentences = [s for s in grouped]
+        obj = [s for s in grouped]
 
-        self.sentence = [self.vocab.convert_tokens_to_ids([w[0]] for w in s) for s in sentences]
-        self.tag = [self.vocab.convert_tags_to_ids([w[2]] for w in s) for s in sentences]
+        sentences = [[w[0] for w in s] for s in obj]
+        tags = [[w[2] for w in s] for s in obj]
+
+        self.sentence = [self.vocab.convert_tokens_to_ids(s) for s in sentences]
+        self.tag = [self.vocab.convert_tags_to_ids(t) for t in tags]
 
     def __len__(self):
         return len(self.sentence)
