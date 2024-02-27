@@ -17,7 +17,6 @@ dev_batch: 128
 test_batch: 128
 save_path: ./checkpoint
 
-num_labels: 3
 patience: 5
 learning_rate: 0.001
 num_epochs: 5

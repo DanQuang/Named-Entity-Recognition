@@ -22,8 +22,8 @@ class MyDataset(Dataset):
         grouped = data.groupby("Sentence #").apply(agg_func)
         sentences = [s for s in grouped]
 
-        self.sentence = [self.vocab.convert_tokens_to_ids(s) for s in sentences]
-        self.tag = [self.vocab.convert_tags_to_ids(s) for s in sentences]
+        self.sentence = [self.vocab.convert_tokens_to_ids([w[0]] for w in s) for s in sentences]
+        self.tag = [self.vocab.convert_tags_to_ids([w[2]] for w in s) for s in sentences]
 
     def __len__(self):
         return len(self.sentence)
