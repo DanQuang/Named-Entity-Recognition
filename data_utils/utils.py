@@ -13,9 +13,9 @@ def padding_sequence(array, max_length, padding_value):
     if len(array) < max_length:
             padding_length = max_length - len(array)
             padding_array = array + [padding_value]*padding_length
-            return torch.tensor(padding_array, dtype= torch.int16)
+            return torch.tensor(padding_array, dtype= torch.int)
     else:
-        return torch.tensor(array[:max_length], dtype= torch.int16)
+        return torch.tensor(array[:max_length], dtype= torch.int)
     
 def padding_tags(list_tags, max_length, padding_value):
     out = []
