@@ -18,16 +18,15 @@ class RNN(nn.Module):
         self.embedding_dim = config["text_embedding"]["embedding_dim"]
         self.max_length = config["text_embedding"]["max_length"]
         self.rnn = nn.RNN(self.embedding_dim, self.hidden_units,
-                          num_layers= self.num_layers,dropout=self.dropout)
-        self.fc = nn.LazyLinear(self.num_tags)
+                          num_layers= self.num_layers,dropout=self.dropout, batch_first= True)
+        self.fc = nn.Linear(self.hidden_units, self.num_tags)
 
         self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, texts, tags):
         embbed = self.text_embedding(texts)
-        rnn_output, _ = self.rnn(embbed)
-        out = rnn_output[-1]
-        logits = self.fc(out)
+        rnn_output, hidden = self.rnn(embbed)
+        logits = self.fc(hidden)
         tags_padding = padding_tags(tags, self.max_length, self.vocab.tag_to_idx['O'])
         loss = self.criterion(logits, tags_padding)
         return logits, loss
