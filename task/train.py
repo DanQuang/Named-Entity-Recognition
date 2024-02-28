@@ -54,7 +54,7 @@ class Train_Task:
 
             for _, item in enumerate(tqdm(train)):
                 self.optim.zero_grad()
-                X, y = item["sentence"], item["tag"]
+                X, y = item["sentence"].to(self.device), item["tag"].to(self.device)
                 # Forward
                 y_logits, loss = self.model(X, y)
                 train_loss += loss
@@ -67,7 +67,7 @@ class Train_Task:
             valid_trues = []
             with torch.inference_mode():
                 for _, item in enumerate(tqdm(dev)):
-                    X, y = item["sentence"], item["tag"]
+                    X, y = item["sentence"].to(self.device), item["tag"].to(self.device)
                     valid_trues += y.tolist()
                     y_logits, _ = self.model(X, y)
                     y_preds = torch.softmax(y_logits, dim = 1).argmax(dim= 1)

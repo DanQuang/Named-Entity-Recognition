@@ -24,7 +24,7 @@ class MyDataset(Dataset):
         self.tags = [[w[2] for w in s] for s in obj]
 
     def __len__(self):
-        return len(self.sentence)
+        return len(self.sentences)
     
     def __getitem__(self, index):
         sentence = self.sentences[index]

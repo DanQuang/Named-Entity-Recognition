@@ -27,7 +27,7 @@ class Test_Task:
             self.model.eval()
             with torch.inference_mode():
                 for _, item in enumerate(tqdm(test)):
-                    X, y = item["sentence"], item["tag"]
+                    X, y = item["sentence"].to(self.device), item["tag"].to(self.device)
                     test_trues += y.tolist()
                     y_logits, _ = self.model(X, y)
                     y_preds = torch.softmax(y_logits, dim = 1).argmax(dim= 1)
