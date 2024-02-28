@@ -3,7 +3,6 @@ from torch import nn
 import torch.nn.functional as F
 from text_module.word_embedding import WordEmbedding
 from data_utils.vocab import Vocab
-from data_utils.utils import padding_tags
 
 class RNN(nn.Module):
     def __init__(self, config):
