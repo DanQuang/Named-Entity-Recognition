@@ -25,8 +25,7 @@ class RNN(nn.Module):
 
     def forward(self, texts, tags):
         embbed = self.text_embedding(texts)
-        rnn_output, hidden = self.rnn(embbed)
-        logits = self.fc(hidden)
-        tags_padding = padding_tags(tags, self.max_length, self.vocab.tag_to_idx['O'])
-        loss = self.criterion(logits, tags_padding)
+        rnn_output, _ = self.rnn(embbed)
+        logits = self.fc(rnn_output)
+        loss = self.criterion(logits, tags)
         return logits, loss
