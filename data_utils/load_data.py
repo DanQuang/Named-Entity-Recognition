@@ -13,7 +13,7 @@ class MyDataset(Dataset):
         self.vocab = vocab
 
         data = pd.read_csv(dataset_path, encoding= 'latin1')
-        data = data.fillna('ffill')
+        data = data.fillna(method= 'ffill')
 
         agg_func = lambda s: [(w, p, t) for w, p, t in zip(s["Word"].values.tolist(),
                                                            s["POS"].values.tolist(),

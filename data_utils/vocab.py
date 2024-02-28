@@ -19,7 +19,6 @@ class Vocab:
         dataset = dataset.fillna(method= 'ffill')
         
         list_words = list(set(dataset["Word"].values))
-        list_words.append('<pad>')
 
         # lis tags
         list_tags = list(set(dataset["Tag"].values))
