@@ -8,8 +8,6 @@ class MyDataset(Dataset):
     def __init__(self, dataset_path: str, vocab: Vocab):
         super(MyDataset, self).__init__()
 
-        self.sentence = []
-        self.tag = []
         self.vocab = vocab
 
         data = pd.read_csv(dataset_path, encoding= 'latin1')
@@ -22,19 +20,23 @@ class MyDataset(Dataset):
         grouped = data.groupby("Sentence #").apply(agg_func)
         obj = [s for s in grouped]
 
-        sentences = [[w[0] for w in s] for s in obj]
-        tags = [[w[2] for w in s] for s in obj]
-
-        self.sentence = [self.vocab.convert_tokens_to_ids(s) for s in sentences]
-        self.tag = [self.vocab.convert_tags_to_ids(t) for t in tags]
+        self.sentences = [[w[0] for w in s] for s in obj]
+        self.tags = [[w[2] for w in s] for s in obj]
 
     def __len__(self):
         return len(self.sentence)
     
     def __getitem__(self, index):
+        sentence = self.sentences[index]
+        tag = self.tags[index]
+
+        # tokenize
+        sentence_padding = self.vocab.convert_tokens_to_ids(sentence)
+        tag_padding = self.vocab.convert_tags_to_ids(tag)
+
         return {
-            "sentence": self.sentence[index],
-            "tag": self.tag[index]
+            "sentence": sentence_padding,
+            "tag": tag_padding
         }
 
 

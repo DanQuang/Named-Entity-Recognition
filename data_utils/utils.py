@@ -1,7 +1,7 @@
 import torch
 from typing import List, Optional
 
-def padding_sequence(array, max_length, padding_value):
+def padding(array, max_length, padding_value):
     """
     Input:
         array: list of words in the sequence that need padding
@@ -16,14 +16,3 @@ def padding_sequence(array, max_length, padding_value):
             return torch.tensor(padding_array, dtype= torch.int)
     else:
         return torch.tensor(array[:max_length], dtype= torch.int)
-    
-def padding_tags(list_tags, max_length, padding_value):
-    out = []
-    for tags in list_tags:
-        if len(tags) < max_length:
-            padding_length = max_length - len(tags)
-            padding_array = tags + [padding_value]*padding_length
-            out.append(torch.tensor(padding_array, dtype= torch.int))
-        else:
-             out.append(torch.tensor(tags[:max_length], dtype= torch.int))
-    return torch.Tensor(out)
