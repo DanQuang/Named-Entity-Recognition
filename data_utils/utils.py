@@ -13,6 +13,6 @@ def padding(array, max_length, padding_value):
     if len(array) < max_length:
             padding_length = max_length - len(array)
             padding_array = array + [padding_value]*padding_length
-            return torch.tensor(padding_array, dtype= torch.int)
+            return torch.tensor(padding_array, dtype= torch.long)
     else:
-        return torch.tensor(array[:max_length], dtype= torch.int)
+        return torch.tensor(array[:max_length], dtype= torch.long)

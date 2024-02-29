@@ -26,5 +26,5 @@ class RNN(nn.Module):
         embbed = self.text_embedding(texts)
         rnn_output, _ = self.rnn(embbed)
         logits = self.fc(rnn_output)
-        loss = self.criterion(logits, tags)
+        loss = self.criterion(logits.permute(0, 2, 1), tags)
         return logits, loss
