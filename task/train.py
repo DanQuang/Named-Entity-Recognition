@@ -70,7 +70,7 @@ class Train_Task:
                     X, y = item["sentence"].to(self.device), item["tag"].to(self.device)
                     valid_trues += y.tolist()
                     y_logits, _ = self.model(X, y)
-                    y_preds = torch.softmax(y_logits, dim = 1).argmax(dim= 1)
+                    y_preds = torch.softmax(y_logits, dim = -1).argmax(dim= -1)
                     valid_preds += y_preds.tolist()
 
                 valid_acc, valid_precision, valid_recall, valid_f1 = evaluate.compute_score(valid_trues, valid_preds)

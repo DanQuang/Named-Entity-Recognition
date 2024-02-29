@@ -30,7 +30,7 @@ class Test_Task:
                     X, y = item["sentence"].to(self.device), item["tag"].to(self.device)
                     test_trues += y.tolist()
                     y_logits, _ = self.model(X, y)
-                    y_preds = torch.softmax(y_logits, dim = 1).argmax(dim= 1)
+                    y_preds = torch.softmax(y_logits, dim = -1).argmax(dim= -1)
                     test_preds += y_preds.tolist()
 
                 acc, prec, recall, f1 = evaluate.compute_score(test_trues, test_preds)
