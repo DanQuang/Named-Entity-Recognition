@@ -33,7 +33,7 @@ class Vocab:
         self.word_to_idx = {word: idx + 1 for idx, word in enumerate(list_words)}
         self.idx_to_word = {idx: word for word, idx in self.word_to_idx.items()}
 
-        self.tag_to_idx = {tag: idx + 1 for idx, tag in enumerate(list_tags)}
+        self.tag_to_idx = {tag: idx for idx, tag in enumerate(list_tags)}
         self.idx_to_tag = {idx: tag for tag, idx in self.tag_to_idx.items()}
 
     def convert_tokens_to_ids(self, tokens: List):
@@ -51,7 +51,7 @@ class Vocab:
         return [self.idx_to_tag[idx] for idx in ids]
     
     def vocab_size(self):
-        return len(self.word_to_idx)
+        return len(self.word_to_idx) + 1
     
     def num_tags(self):
         return len(self.tag_to_idx)
